@@ -1,0 +1,24 @@
+<<<<<<< HEAD
+=======
+# macOS system files
+.DS_Store
+
+# Temporary Word/Office lock files
+~$*
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+.env
+.venv/
+
+# IDE and editor configs
+.idea/
+.vscode/
+
+# Build or log files
+*.log
+>>>>>>> Reapply .gitignore rules and clean tracking
