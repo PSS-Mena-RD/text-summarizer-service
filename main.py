@@ -2,7 +2,7 @@ from fastapi import FastAPI, UploadFile, Form
 from fastapi.responses import JSONResponse
 import google.generativeai as genai
 from pydantic import BaseModel
-
+import json
 import os
 
 class TextIn(BaseModel):
@@ -39,7 +39,13 @@ async def summarize(input: TextIn):
                                       f"Summarize the document in its most used language in no more than 250 words."
                                      "Return ONLY valid JSON with one key 'Text_Summary' and its value being the summary. "
         f"Here is the text:\n{content}")
-    summary = response.text
+    try:
+        summary_json = json.loads(response.text)
+    except json.JSONDecodeError:
+        # If it’s not valid JSON, wrap it manually
+        summary_json = {"Text_Summary": response.text.strip()}
+
+    return JSONResponse(summary_json)
     return JSONResponse({"Text_Summary": summary})
 @app.get("/")
 def read_root():
