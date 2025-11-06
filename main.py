@@ -32,7 +32,7 @@ async def summarize(input: TextIn):
     """
     #content = await file.read()
     #text = content.decode("utf-8")
-    content=input.text
+    content=input.TextIn
     genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
     model = genai.GenerativeModel("gemini-2.5-flash")
     response = model.generate_content(f"I will give you a text written in either Arabic, English, or a mix of both."
