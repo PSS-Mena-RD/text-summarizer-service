@@ -1,7 +1,13 @@
 from fastapi import FastAPI, UploadFile, Form
 from fastapi.responses import JSONResponse
 import google.generativeai as genai
+from pydantic import BaseModel
+
 import os
+
+class TextIn(BaseModel):
+    TextIn: str  # must match the JSON field name sent in the request
+
 app = FastAPI()
 
 '''
@@ -31,7 +37,7 @@ async def summarize(input: TextIn):
     model = genai.GenerativeModel("gemini-2.5-flash")
     response = model.generate_content(f"I will give you a text written in either Arabic, English, or a mix of both . Summarize the document in its most used language in no more than 250 words. Provide the summary as in JSON with the field Text_Summary: \n{text}")
     summary = response.text
-    return JSONResponse({"summary": summary})
+    return JSONResponse({"Text_Summary": summary})
 @app.get("/")
 def read_root():
     return {"message": "Service is running!"}
